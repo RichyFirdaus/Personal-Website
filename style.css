@@ -1,28 +1,14 @@
-/* --- 1. VARIABEL WARNA (Light Mode & Dark Mode) --- */
+/* --- 1. VARIABEL WARNA (DEFAULT DARK MODE) --- */
 :root {
-    /* Mode Terang (Default) */
-    --bg-color: #ffffff;
-    --text-main: #333333;
-    --text-sec: #666666;
-    --card-bg: #ffffff;
-    --card-border: #eeeeee;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --accent: #0066cc; /* Biru Profesional */
-    --shadow: rgba(0, 0, 0, 0.05);
-    --section-alt: #f8f9fa;
-}
-
-/* Mode Gelap (Diaktifkan JS) */
-.dark-mode {
-    --bg-color: #121212;
-    --text-main: #f0f0f0;
-    --text-sec: #aaaaaa;
-    --card-bg: #1e1e1e;
-    --card-border: #333333;
-    --nav-bg: rgba(18, 18, 18, 0.9);
-    --accent: #4d9aff; /* Biru Terang */
-    --shadow: rgba(0, 0, 0, 0.5);
-    --section-alt: #181818;
+    --bg-body: #0a0a0a;       /* Hitam sangat gelap */
+    --bg-card: #161616;       /* Abu-abu gelap untuk kartu */
+    --bg-nav: rgba(10, 10, 10, 0.8);
+    
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;    /* Abu-abu terang untuk teks sekunder */
+    
+    --accent: #3b82f6;        /* Biru Neon Modern */
+    --border: #333333;        /* Garis pinggir halus */
 }
 
 /* --- 2. RESET & GLOBAL --- */
@@ -30,130 +16,96 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: var(--bg-color);
+    background-color: var(--bg-body);
     color: var(--text-main);
     line-height: 1.6;
-    overflow-x: hidden;
-    transition: background-color 0.3s, color 0.3s;
 }
 
-a { text-decoration: none; color: inherit; transition: 0.3s; }
+a { text-decoration: none; color: inherit; transition: 0.2s; }
 ul { list-style: none; }
-.container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
-/* --- 3. ANIMASI SCROLL (Hidden -> Show) --- */
-.hidden {
-    opacity: 0;
-    transform: translateY(30px);
-    filter: blur(5px);
-    transition: all 0.8s ease-out;
-}
-.show { opacity: 1; transform: translateY(0); filter: blur(0); }
-
-/* --- 4. NAVBAR --- */
+/* --- 3. NAVBAR (Simpel & Rapi) --- */
 nav {
-    padding: 15px 0;
+    padding: 20px 0;
     position: sticky;
     top: 0;
-    background: var(--nav-bg);
+    background: var(--bg-nav);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
     z-index: 100;
-    border-bottom: 1px solid var(--card-border);
 }
+
 .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
-.menu { display: flex; align-items: center; gap: 25px; }
-.menu a { font-size: 0.9rem; font-weight: 500; color: var(--text-sec); }
-.menu a:hover { color: var(--accent); }
-.theme-toggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; }
 
-/* --- 5. HERO SECTION --- */
-.hero { min-height: 90vh; display: flex; align-items: center; padding: 50px 0; }
-.hero-wrapper { display: flex; align-items: center; gap: 50px; }
-.hero-text { flex: 1; }
-.hero-image { flex: 1; text-align: center; }
+.logo { 
+    font-weight: 800; font-size: 1.3rem; letter-spacing: -0.5px; 
+    background: linear-gradient(to right, #fff, #a0a0a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-.greeting {
-    display: inline-block;
-    background: var(--section-alt);
-    color: var(--accent);
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    border: 1px solid var(--card-border);
-}
-.hero h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 20px; letter-spacing: -1px; }
-.highlight { color: var(--accent); }
-/* Kursor Berkedip */
-#typing-text::after {
-    content: '|';
-    margin-left: 5px;
-    color: var(--accent);
-    animation: blink 0.7s infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
+.menu { display: flex; gap: 30px; }
+.menu a { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
+.menu a:hover, .menu a.active { color: white; } /* Highlight menu aktif */
 
-.hero-image img {
-    width: 300px; height: 300px; object-fit: cover;
-    border-radius: 20px;
-    box-shadow: 20px 20px 0px var(--section-alt);
-    border: 1px solid var(--card-border);
+/* --- 4. LAYOUT HALAMAN (Hero & Content) --- */
+.page-header {
+    padding: 80px 0 40px 0;
+    text-align: center;
 }
+
+.page-header h1 {
+    font-size: 2.5rem; margin-bottom: 15px; letter-spacing: -1px;
+}
+
+.page-header p {
+    color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;
+}
+
+/* --- 5. GRID SYSTEM (Untuk Projects & Diary) --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding-bottom: 80px;
+}
+
+/* Desain Kartu (Card) yang Lebih Modern */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+.card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+.card-link { 
+    color: var(--accent); font-weight: 600; font-size: 0.9rem; 
+    display: inline-block; 
+}
+
+/* --- 6. COMPONENTS LAIN --- */
 .btn-primary {
     display: inline-block;
-    background-color: var(--text-main);
-    color: var(--bg-color);
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 600;
+    background: white; color: black;
+    padding: 12px 30px; border-radius: 50px;
+    font-weight: 600; margin-top: 20px;
 }
-.btn-primary:hover { transform: translateY(-3px); opacity: 0.9; }
+.btn-primary:hover { background: #e0e0e0; }
 
-/* --- 6. PROJECTS SECTION --- */
-.section-gray { background-color: var(--section-alt); padding: 80px 0; }
-.section-title { margin-bottom: 40px; }
-.section-title h2 { font-size: 2rem; margin-bottom: 10px; }
-.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-.card {
-    background: var(--card-bg); border: 1px solid var(--card-border);
-    border-radius: 16px; overflow: hidden; transition: transform 0.3s;
+footer {
+    text-align: center; padding: 40px; border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.9rem; margin-top: auto;
 }
-.card:hover { transform: translateY(-5px); border-color: var(--accent); }
-.card-image { height: 180px; width: 100%; background-color: #ddd; }
-.card-content { padding: 25px; }
-.card-content h3 { margin-bottom: 10px; font-size: 1.2rem; }
-.card-content p { color: var(--text-sec); font-size: 0.9rem; margin-bottom: 15px; }
-.card-link { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
 
-/* --- 7. DIARY SECTION (Timeline Style) --- */
-.diary-list {
-    max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;
-}
-.diary-item {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px; padding: 25px;
-    border-left: 4px solid var(--accent); /* Garis warna di kiri */
-    transition: transform 0.3s;
-}
-.diary-item:hover { transform: translateX(5px); }
-.diary-date {
-    font-size: 0.8rem; color: var(--text-sec); text-transform: uppercase;
-    letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: block;
-}
-.diary-item h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-main); }
-.diary-content { color: var(--text-sec); font-size: 0.95rem; white-space: pre-line; }
-
-/* --- 8. FOOTER --- */
-footer { text-align: center; padding: 40px; border-top: 1px solid var(--card-border); color: var(--text-sec); font-size: 0.9rem; }
-
-/* Responsive HP */
-@media (max-width: 768px) {
-    .hero-wrapper { flex-direction: column-reverse; text-align: center; }
-    .hero h1 { font-size: 2.2rem; }
-    .hero-image img { width: 250px; height: 250px; }
-    .menu { display: none; } /* Menu hidden di HP simple */
-    .theme-toggle { display: block; position: absolute; right: 20px; }
-}
+/* Animasi Fade In Sederhana saat pindah halaman */
+body { animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

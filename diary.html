@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary - Nama Anda</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-wrapper">
+            <a href="index.html" class="logo">Nama.</a>
+            <ul class="menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Karya</a></li>
+                <li><a href="diary.html" class="active">Diary</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Catatan Harian</h1>
+            <p>Jurnal belajar dan ide-ide acak.</p>
+        </div>
+
+        <div id="diary-container" class="grid-container" style="grid-template-columns: 1fr;"> 
+            </div>
+    </div>
+
+    <footer>© 2026 Richy Firdaus.</footer>
+
+    <script>
+        async function loadDiary() {
+            try {
+                const response = await fetch('diary.json');
+                const data = await response.json();
+                const container = document.getElementById('diary-container');
+
+                data.forEach(entry => {
+                    const card = document.createElement('div');
+                    card.className = 'card'; // Pakai style card yang sama
+                    card.innerHTML = `
+                        <small style="color:var(--accent); font-weight:bold;">${entry.tanggal}</small>
+                        <h3 style="margin-top:5px;">${entry.judul}</h3>
+                        <p style="white-space: pre-line;">${entry.isi}</p>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                document.getElementById('diary-container').innerHTML = "<p style='text-align:center'>Gagal memuat diary. Pastikan file JSON ada.</p>";
+            }
+        }
+        loadDiary();
+    </script>
+</body>
+</html>

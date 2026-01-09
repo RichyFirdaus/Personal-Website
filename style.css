@@ -109,3 +109,52 @@ footer {
 /* Animasi Fade In Sederhana saat pindah halaman */
 body { animation: fadeIn 0.5s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- CSS KHUSUS TAMPILAN HP (RESPONSIVE) --- */
+@media (max-width: 768px) {
+
+    /* 1. Perbaiki Jarak Halaman */
+    .container {
+        padding: 0 20px; /* Beri jarak kiri-kanan biar gak mepet layar */
+        width: 100%;
+    }
+
+    /* 2. Ubah Menu Navigasi Jadi Atas-Bawah */
+    .nav-wrapper {
+        flex-direction: column; /* Menu turun ke bawah logo */
+        gap: 15px;
+    }
+
+    .menu {
+        gap: 20px; /* Jarak antar menu diperlebar biar gampang dipencet jempol */
+        font-size: 0.9rem;
+    }
+
+    /* 3. Kecilkan Judul Besar (H1) */
+    .page-header {
+        padding-top: 40px; /* Kurangi jarak kosong di atas */
+    }
+
+    .page-header h1 {
+        font-size: 1.8rem; /* Ukuran font dikecilkan */
+    }
+
+    /* 4. Atur Grid Kartu (Projects/Diary) */
+    .grid-container {
+        /* Paksa kartu jadi 1 kolom memanjang ke bawah */
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+
+    /* 5. Perbaiki Tampilan Kartu */
+    .card {
+        padding: 20px; /* Kurangi padding dalam kartu */
+    }
+
+    /* 6. Foto Profil di Home */
+    .page-header img {
+        width: 120px; /* Sedikit lebih kecil */
+        height: 120px;
+    }
+}
+

@@ -1,0 +1,17 @@
+[
+  {
+    "tanggal": "10 Januari 2026",
+    "judul": "Fitur Diary Berhasil!",
+    "isi": "Akhirnya fitur catatan harian ini aktif. Sekarang saya tidak perlu mengedit HTML setiap hari, cukup update file JSON ini saja dan website akan otomatis berubah. Keren kan?"
+  },
+  {
+    "tanggal": "9 Januari 2026",
+    "judul": "Deploy ke GitHub Pages",
+    "isi": "Hari ini belajar cara upload kodingan ke GitHub. Sempat bingung setting DNS untuk domain sendiri, tapi akhirnya berhasil hijau semua checklist-nya."
+  },
+  {
+    "tanggal": "8 Januari 2026",
+    "judul": "Memilih Desain",
+    "isi": "Galau antara desain ala SpaceX yang gelap atau desain Minimalis bersih. Akhirnya pilih yang minimalis tapi ada fitur Dark Mode biar tetap canggih."
+  }
+]

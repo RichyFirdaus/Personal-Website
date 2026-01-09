@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andi Richy Firdaus</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-wrapper">
+            <div class="logo">Richy.</div>
+            
+            <ul class="menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Karya</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+
+            <button class="theme-toggle" id="theme-toggle" title="Ganti Mode">🌙</button>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container hero-wrapper">
+            <div class="hero-text hidden">
+                <span class="greeting">Halo, Saya Developer</span>
+                <h1>Menciptakan <br> <span class="highlight" id="typing-text"></span></h1>
+                <p>Mengubah ide kompleks menjadi solusi digital yang simpel, cepat, dan elegan.</p>
+                <a href="#projects" class="btn-primary">Lihat Portfolio</a>
+            </div>
+
+            <div class="hero-image hidden">
+                <img src="https://placehold.co/500x500/eee/333?text=Foto+Anda" alt="Profile Picture">
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-gray">
+        <div class="container">
+            <div class="section-title hidden">
+                <h2>Karya Pilihan</h2>
+                <p>Beberapa proyek terbaru yang saya kerjakan.</p>
+            </div>
+
+            <div class="project-grid">
+                <div class="card hidden">
+                    <div class="card-image" style="background-color: #d4e4ff;"></div>
+                    <div class="card-content">
+                        <h3>Aplikasi Keuangan</h3>
+                        <p>Membantu UMKM mencatat pengeluaran harian dengan laporan otomatis.</p>
+                        <a href="#" class="card-link">Lihat Detail →</a>
+                    </div>
+                </div>
+
+                <div class="card hidden">
+                    <div class="card-image" style="background-color: #ffd4d4;"></div>
+                    <div class="card-content">
+                        <h3>Website Sekolah</h3>
+                        <p>Portal informasi pendaftaran siswa baru yang responsif dan cepat.</p>
+                        <a href="#" class="card-link">Lihat Detail →</a>
+                    </div>
+                </div>
+
+                <div class="card hidden">
+                    <div class="card-image" style="background-color: #d4ffea;"></div>
+                    <div class="card-content">
+                        <h3>Landing Page Startup</h3>
+                        <p>Desain minimalis modern untuk meningkatkan konversi penjualan produk.</p>
+                        <a href="#" class="card-link">Lihat Detail →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section container hidden">
+        <h2>Siap Memulai Proyek?</h2>
+        <p style="margin: 20px 0; color: var(--text-sec);">Mari diskusikan ide hebat Anda selanjutnya.</p>
+        <a href="mailto:emailanda@gmail.com" class="btn-primary">Kirim Email</a>
+    </section>
+
+    <footer>
+        <p>© 2024 Nama Anda. Dibuat dengan HTML, CSS & JS.</p>
+    </footer>
+
+    <script>
+        // 1. TYPING EFFECT (EFEK MENGETIK)
+        const textElement = document.getElementById('typing-text');
+        const words = ["Website Modern.", "Aplikasi Cepat.", "Desain Bersih.", "Solusi Digital."];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = 100; // Kecepatan mengetik
+
+            if (isDeleting) {
+                typeSpeed /= 2; // Menghapus lebih cepat
+            }
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                isDeleting = true;
+                typeSpeed = 2000; // Tunggu 2 detik setelah selesai ngetik
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length; // Pindah ke kata berikutnya
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        // 2. DARK MODE TOGGLE
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // Ganti ikon
+            if(body.classList.contains('dark-mode')){
+                themeToggle.textContent = '☀️';
+            } else {
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // 3. SCROLL REVEAL (ANIMASI SAAT DI-SCROLL)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        hiddenElements.forEach((el) => observer.observe(el));
+
+        // Jalankan efek mengetik saat web siap
+        document.addEventListener('DOMContentLoaded', typeEffect);
+    </script>
+</body>
+</html>

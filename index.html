@@ -3,151 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio & Diary | Nama Anda</title>
+    <title>Home - Nama Anda</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <nav>
         <div class="container nav-wrapper">
-            <div class="logo">Nama.</div>
+            <a href="index.html" class="logo">Nama.</a>
             <ul class="menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Karya</a></li>
-                <li><a href="#diary">Diary</a></li>
-                <li><a href="#contact">Kontak</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="projects.html">Karya</a></li>
+                <li><a href="diary.html">Diary</a></li>
             </ul>
-            <button class="theme-toggle" id="theme-toggle" title="Ganti Mode">🌙</button>
         </div>
     </nav>
 
-    <section id="home" class="hero">
-        <div class="container hero-wrapper">
-            <div class="hero-text hidden">
-                <span class="greeting">Halo, Saya Developer</span>
-                <h1>Menciptakan <br> <span class="highlight" id="typing-text"></span></h1>
-                <p>Mengubah ide menjadi kode yang bersih, fungsional, dan bermanfaat untuk banyak orang.</p>
-                <a href="#projects" class="btn-primary">Lihat Karya</a>
-            </div>
-            <div class="hero-image hidden">
-                <img src="https://placehold.co/400x400/eee/333?text=Foto+Anda" alt="Profile">
-            </div>
+    <div class="container page-header" style="padding-top: 120px;">
+        <img src="https://placehold.co/150x150/222/fff?text=ME" style="border-radius:50%; margin-bottom:20px; border:2px solid #333;">
+        <h1>Halo, saya Richy.</h1>
+        <p>Seorang Web Developer yang fokus pada antarmuka minimalis dan fungsional. Selamat datang di ruang digital saya.</p>
+        
+        <div style="margin-top: 30px;">
+            <a href="projects.html" class="btn-primary">Lihat Karya Saya →</a>
         </div>
-    </section>
+    </div>
 
-    <section id="projects" class="section-gray">
-        <div class="container">
-            <div class="section-title hidden">
-                <h2>Karya Pilihan</h2>
-                <p>Beberapa proyek coding yang pernah saya kerjakan.</p>
-            </div>
-            <div class="project-grid">
-                <div class="card hidden">
-                    <div class="card-image" style="background-color: #d4e4ff;"></div>
-                    <div class="card-content">
-                        <h3>Aplikasi Keuangan</h3>
-                        <p>Web app untuk mencatat pengeluaran harian UMKM.</p>
-                        <a href="#" class="card-link">Lihat Detail →</a>
-                    </div>
-                </div>
-                <div class="card hidden">
-                    <div class="card-image" style="background-color: #ffd4d4;"></div>
-                    <div class="card-content">
-                        <h3>Website Sekolah</h3>
-                        <p>Portal informasi siswa baru yang responsif.</p>
-                        <a href="#" class="card-link">Lihat Detail →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <footer>© 2026 Richy Firdaus.</footer>
 
-    <section id="diary">
-        <div class="container" style="padding: 80px 20px;">
-            <div class="section-title hidden">
-                <h2>Catatan Harian</h2>
-                <p>Update perkembangan belajar dan ide harian saya.</p>
-            </div>
-            <div id="diary-container" class="diary-list"></div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <p>Hubungi saya di: <a href="mailto:emailanda@gmail.com" style="color:var(--accent)">emailanda@gmail.com</a></p>
-        <p style="margin-top:10px; opacity:0.6">© 2026 Nama Anda.</p>
-    </footer>
-
-    <script>
-        // 1. TYPING EFFECT
-        const textElement = document.getElementById('typing-text');
-        const words = ["Website Modern.", "Aplikasi Cepat.", "Desain Bersih."];
-        let wordIndex = 0, charIndex = 0, isDeleting = false;
-
-        function typeEffect() {
-            const currentWord = words[wordIndex];
-            if (isDeleting) {
-                textElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                textElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            let typeSpeed = isDeleting ? 50 : 100;
-            if (!isDeleting && charIndex === currentWord.length) {
-                isDeleting = true; typeSpeed = 2000;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false; wordIndex = (wordIndex + 1) % words.length; typeSpeed = 500;
-            }
-            setTimeout(typeEffect, typeSpeed);
-        }
-
-        // 2. DARK MODE
-        const themeToggle = document.getElementById('theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        });
-
-        // 3. SCROLL ANIMATION & LOAD DIARY
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) entry.target.classList.add('show');
-            });
-        });
-
-        // Fungsi Ambil Data JSON
-        async function loadDiary() {
-            try {
-                const response = await fetch('diary.json');
-                const data = await response.json();
-                const container = document.getElementById('diary-container');
-
-                data.forEach((entry, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'diary-item hidden';
-                    card.style.transitionDelay = `${index * 0.1}s`; // Muncul bergantian
-                    card.innerHTML = `
-                        <span class="diary-date">${entry.tanggal}</span>
-                        <h3>${entry.judul}</h3>
-                        <div class="diary-content">${entry.isi}</div>
-                    `;
-                    container.appendChild(card);
-                    observer.observe(card); // Aktifkan animasi
-                });
-            } catch (error) {
-                console.error("Gagal memuat diary (Mungkin karena dibuka langsung file, bukan server):", error);
-                document.getElementById('diary-container').innerHTML = "<p style='text-align:center'>Gagal memuat data. Pastikan diupload ke GitHub.</p>";
-            }
-        }
-
-        // Jalankan semua saat web siap
-        document.addEventListener('DOMContentLoaded', () => {
-            typeEffect();
-            loadDiary();
-            document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
-        });
-    </script>
 </body>
 </html>

@@ -1,18 +1,18 @@
 /* --- 1. VARIABEL WARNA (Light Mode & Dark Mode) --- */
 :root {
-    /* Warna Mode Terang (Default) */
+    /* Mode Terang (Default) */
     --bg-color: #ffffff;
     --text-main: #333333;
     --text-sec: #666666;
     --card-bg: #ffffff;
     --card-border: #eeeeee;
     --nav-bg: rgba(255, 255, 255, 0.9);
-    --accent: #0066cc; /* Biru */
+    --accent: #0066cc; /* Biru Profesional */
     --shadow: rgba(0, 0, 0, 0.05);
-    --section-alt: #f9f9f9;
+    --section-alt: #f8f9fa;
 }
 
-/* Warna Mode Gelap (Diaktifkan lewat JS) */
+/* Mode Gelap (Diaktifkan JS) */
 .dark-mode {
     --bg-color: #121212;
     --text-main: #f0f0f0;
@@ -20,17 +20,13 @@
     --card-bg: #1e1e1e;
     --card-border: #333333;
     --nav-bg: rgba(18, 18, 18, 0.9);
-    --accent: #4d9aff; /* Biru lebih terang */
+    --accent: #4d9aff; /* Biru Terang */
     --shadow: rgba(0, 0, 0, 0.5);
     --section-alt: #181818;
 }
 
 /* --- 2. RESET & GLOBAL --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Inter', sans-serif;
@@ -38,35 +34,21 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     overflow-x: hidden;
-    transition: background-color 0.3s, color 0.3s; /* Transisi halus saat ganti mode */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 a { text-decoration: none; color: inherit; transition: 0.3s; }
 ul { list-style: none; }
-
-.container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
+.container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
 /* --- 3. ANIMASI SCROLL (Hidden -> Show) --- */
 .hidden {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(30px);
     filter: blur(5px);
     transition: all 0.8s ease-out;
 }
-
-.show {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-}
-
-/* Delay agar kartu muncul bergantian */
-.card:nth-child(2) { transition-delay: 0.2s; }
-.card:nth-child(3) { transition-delay: 0.4s; }
+.show { opacity: 1; transform: translateY(0); filter: blur(0); }
 
 /* --- 4. NAVBAR --- */
 nav {
@@ -78,48 +60,16 @@ nav {
     z-index: 100;
     border-bottom: 1px solid var(--card-border);
 }
-
-.nav-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-weight: 800;
-    font-size: 1.5rem;
-    letter-spacing: -1px;
-}
-
-.menu { display: flex; align-items: center; gap: 30px; }
+.nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -1px; }
+.menu { display: flex; align-items: center; gap: 25px; }
 .menu a { font-size: 0.9rem; font-weight: 500; color: var(--text-sec); }
 .menu a:hover { color: var(--accent); }
-
-/* Tombol Dark Mode */
-.theme-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.2rem;
-    padding: 5px;
-    transition: transform 0.3s;
-}
-.theme-toggle:hover { transform: rotate(15deg); }
+.theme-toggle { background: none; border: none; cursor: pointer; font-size: 1.2rem; }
 
 /* --- 5. HERO SECTION --- */
-.hero {
-    min-height: 90vh; /* Hampir satu layar penuh */
-    display: flex;
-    align-items: center;
-    padding: 50px 0;
-}
-
-.hero-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-}
-
+.hero { min-height: 90vh; display: flex; align-items: center; padding: 50px 0; }
+.hero-wrapper { display: flex; align-items: center; gap: 50px; }
 .hero-text { flex: 1; }
 .hero-image { flex: 1; text-align: center; }
 
@@ -134,54 +84,27 @@ nav {
     margin-bottom: 15px;
     border: 1px solid var(--card-border);
 }
-
-.hero h1 {
-    font-size: 3.5rem;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
-}
-
-#typing-text::after {
-    content: '|'; /* Ini karakter garis lurus */
-    display: inline-block;
-    margin-left: 5px;
-    color: var(--accent); /* Warnanya mengikuti tema */
-    animation: blink 0.7s infinite; /* Animasi kedip-kedip */
-    
-    /* Trik agar baris tidak collapse saat kosong */
-    vertical-align: bottom; 
-}
-
-/* Animasi untuk kursor */
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
+.hero h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 20px; letter-spacing: -1px; }
 .highlight { color: var(--accent); }
-
-.hero p {
-    color: var(--text-sec);
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    max-width: 90%;
+/* Kursor Berkedip */
+#typing-text::after {
+    content: '|';
+    margin-left: 5px;
+    color: var(--accent);
+    animation: blink 0.7s infinite;
 }
+@keyframes blink { 50% { opacity: 0; } }
 
 .hero-image img {
-    width: 350px;
-    height: 350px;
-    object-fit: cover;
+    width: 300px; height: 300px; object-fit: cover;
     border-radius: 20px;
-    box-shadow: 20px 20px 0px var(--section-alt); /* Efek bayangan unik */
+    box-shadow: 20px 20px 0px var(--section-alt);
     border: 1px solid var(--card-border);
 }
-
-/* Tombol */
 .btn-primary {
     display: inline-block;
     background-color: var(--text-main);
-    color: var(--bg-color); /* Warna text kebalikan background */
+    color: var(--bg-color);
     padding: 12px 30px;
     border-radius: 50px;
     font-weight: 600;
@@ -189,63 +112,48 @@ nav {
 .btn-primary:hover { transform: translateY(-3px); opacity: 0.9; }
 
 /* --- 6. PROJECTS SECTION --- */
-.section-gray {
-    background-color: var(--section-alt);
-    padding: 100px 0;
-}
-
-.section-title { margin-bottom: 50px; }
+.section-gray { background-color: var(--section-alt); padding: 80px 0; }
+.section-title { margin-bottom: 40px; }
 .section-title h2 { font-size: 2rem; margin-bottom: 10px; }
-.section-title p { color: var(--text-sec); }
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
 .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; overflow: hidden; transition: transform 0.3s;
 }
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px var(--shadow);
-    border-color: var(--accent);
-}
-
-.card-image {
-    height: 200px;
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-}
-
+.card:hover { transform: translateY(-5px); border-color: var(--accent); }
+.card-image { height: 180px; width: 100%; background-color: #ddd; }
 .card-content { padding: 25px; }
-.card-content h3 { margin-bottom: 10px; font-size: 1.3rem; }
-.card-content p { color: var(--text-sec); font-size: 0.95rem; margin-bottom: 20px; }
+.card-content h3 { margin-bottom: 10px; font-size: 1.2rem; }
+.card-content p { color: var(--text-sec); font-size: 0.9rem; margin-bottom: 15px; }
 .card-link { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
 
-/* --- 7. CONTACT & FOOTER --- */
-.contact-section { padding: 100px 0; text-align: center; }
-
-footer {
-    text-align: center;
-    padding: 40px;
-    border-top: 1px solid var(--card-border);
-    color: var(--text-sec);
-    font-size: 0.9rem;
+/* --- 7. DIARY SECTION (Timeline Style) --- */
+.diary-list {
+    max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;
 }
+.diary-item {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 25px;
+    border-left: 4px solid var(--accent); /* Garis warna di kiri */
+    transition: transform 0.3s;
+}
+.diary-item:hover { transform: translateX(5px); }
+.diary-date {
+    font-size: 0.8rem; color: var(--text-sec); text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: block;
+}
+.diary-item h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-main); }
+.diary-content { color: var(--text-sec); font-size: 0.95rem; white-space: pre-line; }
 
-/* --- RESPONSIVE (HP) --- */
+/* --- 8. FOOTER --- */
+footer { text-align: center; padding: 40px; border-top: 1px solid var(--card-border); color: var(--text-sec); font-size: 0.9rem; }
+
+/* Responsive HP */
 @media (max-width: 768px) {
     .hero-wrapper { flex-direction: column-reverse; text-align: center; }
-    .hero h1 { font-size: 2.5rem; }
-    .hero-image img { width: 280px; height: 280px; margin-bottom: 30px; }
-    .menu { display: none; } /* Menu disembunyikan utk simpel */
-    .theme-toggle { display: block; position: absolute; right: 20px; } /* Munculkan tombol dark mode */
+    .hero h1 { font-size: 2.2rem; }
+    .hero-image img { width: 250px; height: 250px; }
+    .menu { display: none; } /* Menu hidden di HP simple */
+    .theme-toggle { display: block; position: absolute; right: 20px; }
 }

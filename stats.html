@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statistik - Nama Anda</title>
+    <title>Riwayat TryOut</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,7 +16,8 @@
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Karya</a></li>
-                <li><a href="stats.html" class="active">Statistik</a></li> <li><a href="diary.html">Diary</a></li>
+                <li><a href="diary.html">Diary</a></li>
+                <li><a href="stats.html" class="active">Nilai TryOut</a></li>
             </ul>
         </div>
     </nav>
@@ -46,55 +47,93 @@
                 const response = await fetch('stats.json');
                 const dataUTBK = await response.json();
 
-                // 2. Siapkan Label (Sumbu X) dan Data (Sumbu Y)
+                // 2. Siapkan Data
                 const labels = dataUTBK.map(item => item.tryout);
                 const scores = dataUTBK.map(item => item.skor);
 
                 // 3. Konfigurasi Grafik
                 const ctx = document.getElementById('myChart').getContext('2d');
                 
-                // Buat efek gradasi warna di bawah garis
+                // Buat gradasi warna biru
                 let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); // Biru transparan
-                gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');   // Hilang di bawah
+                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.6)'); 
+                gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');   
 
                 new Chart(ctx, {
-                    type: 'line', // Jenis grafik: Garis
+                    type: 'line', 
                     data: {
                         labels: labels,
                         datasets: [{
                             label: 'Skor UTBK',
                             data: scores,
-                            borderColor: '#3b82f6', // Warna Garis (Biru Neon)
-                            backgroundColor: gradient, // Warna isi di bawah garis
-                            borderWidth: 3,
-                            pointBackgroundColor: '#ffffff', // Warna titik
+                            borderColor: '#3b82f6',
+                            backgroundColor: gradient,
+                            borderWidth: 4,
+                            pointBackgroundColor: '#000', // Titik hitam biar kontras
+                            pointBorderColor: '#3b82f6',
+                            pointBorderWidth: 2,
                             pointRadius: 6,
-                            pointHoverRadius: 8,
-                            fill: true, // Isi warna di bawah garis
-                            tension: 0.4 // Membuat garis melengkung halus (tidak kaku)
+                            pointHoverRadius: 10,
+                            fill: true, 
+                            tension: 0.3 
                         }]
                     },
                     options: {
                         responsive: true,
-                        animation: {
-                            duration: 2000, // Durasi animasi 2 detik (Slow motion)
-                            easing: 'easeOutQuart'
-                        },
                         scales: {
                             y: {
-                                beginAtZero: false,
-                                grid: { color: '#333' }, // Warna garis grid tipis
-                                ticks: { color: '#a0a0a0' } // Warna angka
+                                beginAtZero: false, // Biar grafik lebih fokus di angka tinggi
+                                grid: { color: '#333' },
+                                ticks: { color: '#a0a0a0' } 
                             },
                             x: {
-                                grid: { display: false }, // Hilangkan grid vertikal biar bersih
+                                grid: { display: false },
                                 ticks: { color: '#a0a0a0' }
                             }
                         },
                         plugins: {
-                            legend: {
-                                labels: { color: '#ffffff' } // Warna legenda
+                            legend: { labels: { color: '#ffffff' } },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            }
+                        },
+                        // --- BAGIAN KUNCI ANIMASI MERAMBAT ---
+                        animation: {
+                            x: {
+                                type: 'number',
+                                easing: 'linear',
+                                duration: 1000, // Kecepatan garis jalan (makin kecil makin ngebut)
+                                from: NaN, // Mulai dari "tidak ada"
+                                delay: function(ctx) {
+                                    if (ctx.type !== 'data' || ctx.xStarted) {
+                                        return 0;
+                                    }
+                                    ctx.xStarted = true;
+                                    // Delay setiap titik berdasarkan urutannya
+                                    // Titik 1: 0ms, Titik 2: 1000ms, dst.
+                                    return ctx.index * 1000; 
+                                }
+                            },
+                            y: {
+                                type: 'number',
+                                easing: 'linear',
+                                duration: 1000,
+                                from: function(ctx) {
+                                    // Titik muncul dari posisi titik sebelumnya (biar nyambung)
+                                    if (ctx.index === 0) {
+                                        return ctx.chart.scales.y.getPixelForValue(0);
+                                    }
+                                    const meta = ctx.chart.getDatasetMeta(0);
+                                    return meta.data[ctx.index - 1].getProps(['y'], true).y;
+                                },
+                                delay: function(ctx) {
+                                    if (ctx.type !== 'data' || ctx.yStarted) {
+                                        return 0;
+                                    }
+                                    ctx.yStarted = true;
+                                    return ctx.index * 1000;
+                                }
                             }
                         }
                     }
@@ -102,13 +141,12 @@
 
             } catch (error) {
                 console.error("Gagal memuat grafik:", error);
-                document.querySelector('.card').innerHTML = "<p>Gagal memuat data grafik. Pastikan file stats.json ada.</p>";
             }
         }
 
-        // Jalankan fungsi
         renderChart();
     </script>
+
 
 </body>
 </html>

@@ -1,0 +1,22 @@
+[
+  {
+    "tryout": "Tryout 1",
+    "tanggal": "1 Jan 2026",
+    "skor": 480
+  },
+  {
+    "tryout": "Tryout 2",
+    "tanggal": "15 Jan 2026",
+    "skor": 520
+  },
+  {
+    "tryout": "Tryout 3",
+    "tanggal": "1 Feb 2026",
+    "skor": 590
+  },
+  {
+    "tryout": "Tryout 4",
+    "tanggal": "15 Feb 2026",
+    "skor": 650
+  }
+]

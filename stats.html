@@ -43,21 +43,29 @@
     <script>
         async function renderChart() {
             try {
-                // 1. Ambil data dari JSON
                 const response = await fetch('stats.json');
                 const dataUTBK = await response.json();
 
-                // 2. Siapkan Data
                 const labels = dataUTBK.map(item => item.tryout);
                 const scores = dataUTBK.map(item => item.skor);
 
-                // 3. Konfigurasi Grafik
                 const ctx = document.getElementById('myChart').getContext('2d');
                 
-                // Buat gradasi warna biru
+                // Gradasi Biru
                 let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.6)'); 
+                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); 
                 gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');   
+
+                // --- SETTING KECEPATAN ---
+                // Total durasi animasi dari awal sampai akhir (misal 2 detik)
+                const totalDuration = 2000;
+                // Hitung jeda per titik agar pas dengan total durasi
+                const delayBetweenPoints = totalDuration / scores.length;
+                
+                // Trik Animasi:
+                // Kita pakai data "kosong" dulu untuk animasi Y
+                // agar garisnya seolah digambar dari titik sebelumnya
+                const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(scores[0]) : ctx.chart.getDatasetMeta(0).data[ctx.index - 1].getProps(['y'], true).y;
 
                 new Chart(ctx, {
                     type: 'line', 
@@ -69,70 +77,50 @@
                             borderColor: '#3b82f6',
                             backgroundColor: gradient,
                             borderWidth: 4,
-                            pointBackgroundColor: '#000', // Titik hitam biar kontras
+                            pointBackgroundColor: '#1a1a1a', // Warna titik disamakan background biar rapi
                             pointBorderColor: '#3b82f6',
-                            pointBorderWidth: 2,
+                            pointBorderWidth: 3,
                             pointRadius: 6,
                             pointHoverRadius: 10,
                             fill: true, 
-                            tension: 0.3 
+                            tension: 0.4 // Garis melengkung
                         }]
                     },
                     options: {
                         responsive: true,
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
                         scales: {
-                            y: {
-                                beginAtZero: false, // Biar grafik lebih fokus di angka tinggi
-                                grid: { color: '#333' },
-                                ticks: { color: '#a0a0a0' } 
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: '#a0a0a0' }
-                            }
+                            x: { grid: { display: false }, ticks: { color: '#a0a0a0' } },
+                            y: { grid: { color: '#333' }, ticks: { color: '#a0a0a0' }, beginAtZero: false }
                         },
                         plugins: {
-                            legend: { labels: { color: '#ffffff' } },
-                            tooltip: {
-                                mode: 'index',
-                                intersect: false,
-                            }
+                            legend: { display: false } // Sembunyikan legenda biar bersih
                         },
-                        // --- BAGIAN KUNCI ANIMASI MERAMBAT ---
+                        // --- INI RAHASIA ANIMASI HALUSNYA ---
                         animation: {
                             x: {
                                 type: 'number',
-                                easing: 'linear',
-                                duration: 1000, // Kecepatan garis jalan (makin kecil makin ngebut)
-                                from: NaN, // Mulai dari "tidak ada"
-                                delay: function(ctx) {
-                                    if (ctx.type !== 'data' || ctx.xStarted) {
-                                        return 0;
-                                    }
+                                easing: 'linear', // PENTING: Kecepatan rata (tidak ngerem)
+                                duration: delayBetweenPoints,
+                                from: NaN, // Mulai dari tidak ada
+                                delay(ctx) {
+                                    if (ctx.type !== 'data' || ctx.xStarted) return 0;
                                     ctx.xStarted = true;
-                                    // Delay setiap titik berdasarkan urutannya
-                                    // Titik 1: 0ms, Titik 2: 1000ms, dst.
-                                    return ctx.index * 1000; 
+                                    return ctx.index * delayBetweenPoints;
                                 }
                             },
                             y: {
                                 type: 'number',
-                                easing: 'linear',
-                                duration: 1000,
-                                from: function(ctx) {
-                                    // Titik muncul dari posisi titik sebelumnya (biar nyambung)
-                                    if (ctx.index === 0) {
-                                        return ctx.chart.scales.y.getPixelForValue(0);
-                                    }
-                                    const meta = ctx.chart.getDatasetMeta(0);
-                                    return meta.data[ctx.index - 1].getProps(['y'], true).y;
-                                },
-                                delay: function(ctx) {
-                                    if (ctx.type !== 'data' || ctx.yStarted) {
-                                        return 0;
-                                    }
+                                easing: 'linear', // PENTING: Kecepatan rata
+                                duration: delayBetweenPoints,
+                                from: previousY, // Mulai tepat dari posisi titik sebelumnya
+                                delay(ctx) {
+                                    if (ctx.type !== 'data' || ctx.yStarted) return 0;
                                     ctx.yStarted = true;
-                                    return ctx.index * 1000;
+                                    return ctx.index * delayBetweenPoints;
                                 }
                             }
                         }
@@ -146,6 +134,7 @@
 
         renderChart();
     </script>
+
 
 
 </body>

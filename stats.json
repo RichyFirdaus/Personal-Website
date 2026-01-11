@@ -1,22 +1,22 @@
 [
   {
-    "tryout": "Tryout 1",
-    "tanggal": "1 Jan 2026",
-    "skor": 480
+    "tryout": "Ruangguru #1",
+    "tanggal": "-2025",
+    "skor": 542
   },
   {
-    "tryout": "Tryout 2",
-    "tanggal": "15 Jan 2026",
-    "skor": 520
+    "tryout": "Ruangguru #2",
+    "tanggal": "-2025",
+    "skor": 566
   },
   {
-    "tryout": "Tryout 3",
-    "tanggal": "1 Feb 2026",
-    "skor": 590
+    "tryout": "Ruangguru #3",
+    "tanggal": "-2025",
+    "skor": 678
   },
   {
-    "tryout": "Tryout 4",
-    "tanggal": "15 Feb 2026",
+    "tryout": "Sainsin #1",
+    "tanggal": "Januari 2026",
     "skor": 650
   }
 ]

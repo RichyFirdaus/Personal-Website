@@ -6,7 +6,9 @@
     <title>Statistik Nilai - Nama Anda</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
 
@@ -25,7 +27,7 @@
     <div class="container">
         <div class="page-header">
             <h1>Progres Belajar</h1>
-            <p>Klik pada titik grafik garis untuk melihat detail subtes.</p>
+            <p>Klik titik pada grafik garis untuk melihat detail subtes.</p>
         </div>
 
         <div class="stats-grid">
@@ -50,24 +52,23 @@
     <footer>© 2026 Richy Firdaus.</footer>
 
     <script>
+        // --- 3. AKTIFKAN PLUGIN ---
+        Chart.register(ChartDataLabels);
+
         let lineChartInstance = null;
         let radarChartInstance = null;
-        let allData = []; // Simpan data global
+        let allData = [];
 
         async function initCharts() {
             try {
-                // Fetch Data
                 const response = await fetch('stats.json');
                 allData = await response.json();
 
-                // Siapkan Data untuk Line Chart
                 const labels = allData.map(d => d.tryout);
                 const scores = allData.map(d => d.skor);
 
-                // --- 1. RENDER LINE CHART (Kiri) ---
+                // --- KONFIGURASI LINE CHART (KIRI) ---
                 const ctxLine = document.getElementById('lineChart').getContext('2d');
-                
-                // Gradasi Biru
                 let gradient = ctxLine.createLinearGradient(0, 0, 0, 400);
                 gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); 
                 gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');   
@@ -85,7 +86,7 @@
                             pointBackgroundColor: '#1a1a1a',
                             pointBorderColor: '#3b82f6',
                             pointRadius: 6,
-                            pointHoverRadius: 12, // Titik membesar saat dihover
+                            pointHoverRadius: 12,
                             fill: true,
                             tension: 0.4
                         }]
@@ -93,24 +94,33 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        layout: { padding: { top: 20 } }, // Beri ruang atas biar angka gak kepotong
                         onClick: (e) => {
-                            // FITUR INTERAKTIF: KLIK TITIK
                             const points = lineChartInstance.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
                             if (points.length) {
-                                const index = points[0].index;
-                                updateRadarChart(index); // Update radar sesuai titik yg diklik
+                                updateRadarChart(points[0].index);
                             }
                         },
                         scales: {
                             y: { grid: { color: '#333' }, ticks: { color: '#aaa' } },
                             x: { grid: { display: false }, ticks: { color: '#aaa' } }
                         },
-                        plugins: { legend: { display: false } }
+                        plugins: { 
+                            legend: { display: false },
+                            // --- SETTING ANGKA DI ATAS GARIS ---
+                            datalabels: {
+                                color: '#ffffff',
+                                align: 'top',     // Posisi di atas titik
+                                anchor: 'end',    // Jangkar di ujung titik
+                                offset: 5,        // Jarak sedikit ke atas
+                                font: { weight: 'bold', size: 12 },
+                                formatter: Math.round // Bulatkan angka
+                            }
+                        }
                     }
                 });
 
-                // --- 2. RENDER RADAR CHART (Kanan) ---
-                // Default: Tampilkan data Tryout TERAKHIR
+                // --- KONFIGURASI RADAR CHART (KANAN) ---
                 const lastIndex = allData.length - 1;
                 initRadarChart(lastIndex);
 
@@ -122,12 +132,9 @@
         function initRadarChart(index) {
             const ctxRadar = document.getElementById('radarChart').getContext('2d');
             const dataItem = allData[index];
-            
-            // Ambil nama subtes (Key) dan nilainya (Value)
             const subtestLabels = Object.keys(dataItem.detail);
             const subtestScores = Object.values(dataItem.detail);
 
-            // Update Judul
             document.getElementById('radarTitle').innerText = "Detail: " + dataItem.tryout;
 
             radarChartInstance = new Chart(ctxRadar, {
@@ -135,7 +142,7 @@
                 data: {
                     labels: subtestLabels,
                     datasets: [{
-                        label: 'Skor Subtes',
+                        label: 'Skor',
                         data: subtestScores,
                         backgroundColor: 'rgba(59, 130, 246, 0.2)',
                         borderColor: '#3b82f6',
@@ -147,32 +154,39 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        r: { // Konfigurasi sumbu jari-jari
-                            angleLines: { color: '#444' }, // Garis jaring
+                        r: {
+                            angleLines: { color: '#444' },
                             grid: { color: '#333' },
-                            pointLabels: { color: '#fff', font: { size: 12 } }, // Label PU/PPU
-                            ticks: { display: false, backdropColor: 'transparent' }, // Hilangkan angka grid biar bersih
+                            pointLabels: { color: '#fff', font: { size: 11 } },
+                            ticks: { display: false },
                             suggestedMin: 0,
-                            suggestedMax: 1000 // Skala UTBK (0-1000)
+                            suggestedMax: 1000
                         }
                     },
-                    plugins: { legend: { display: false } }
+                    plugins: { 
+                        legend: { display: false },
+                        // --- SETTING ANGKA DI RADAR ---
+                        datalabels: {
+                            color: '#ffffff',
+                            backgroundColor: 'rgba(0,0,0,0.7)', // Kotak hitam transparan
+                            borderRadius: 4,
+                            padding: 4,
+                            font: { size: 10 },
+                            formatter: Math.round
+                        }
+                    }
                 }
             });
         }
 
-        // Fungsi Update Radar saat Line Chart diklik
         function updateRadarChart(index) {
             const dataItem = allData[index];
             const subtestScores = Object.values(dataItem.detail);
-            
-            // Ganti Data Radar
             radarChartInstance.data.datasets[0].data = subtestScores;
             document.getElementById('radarTitle').innerText = "Detail: " + dataItem.tryout;
             radarChartInstance.update();
         }
 
-        // Jalankan
         initCharts();
     </script>
 

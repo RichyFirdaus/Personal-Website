@@ -90,13 +90,13 @@
     "tanggal": "15 Feb 2026",
     "skor": 713,
     "detail": {
-      "PU": -,
-      "PPU": -,
-      "PBM": -,
-      "PK": -,
-      "LBI": -,
-      "LBE": -,
-      "PM": -
+      "PU": 0,
+      "PPU": 0,
+      "PBM": 0,
+      "PK": 0,
+      "LBI": 0,
+      "LBE": 0,
+      "PM": 0
     }
   }
 ]

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat TryOut</title>
+    <title>Statistik Nilai - Nama Anda</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,8 +16,8 @@
             <ul class="menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="projects.html">Karya</a></li>
-                <li><a href="diary.html">Diary</a></li>
                 <li><a href="stats.html" class="active">Nilai TryOut</a></li>
+                <li><a href="diary.html">Diary</a></li>
             </ul>
         </div>
     </nav>
@@ -25,118 +25,156 @@
     <div class="container">
         <div class="page-header">
             <h1>Progres Belajar</h1>
-            <p>Grafik perjalanan nilai Tryout UTBK saya.</p>
+            <p>Klik pada titik grafik garis untuk melihat detail subtes.</p>
         </div>
 
-        <div class="card" style="margin-bottom: 50px;">
-            <canvas id="myChart"></canvas>
-        </div>
+        <div class="stats-grid">
+            
+            <div class="card">
+                <h3 style="margin-bottom: 20px;">Riwayat Skor Total</h3>
+                <div style="height: 300px;">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
 
-        <div class="card">
-            <h3>Analisis Singkat</h3>
-            <p>Grafik di atas menunjukkan tren kenaikan skor yang konsisten. Saya fokus memperbaiki kelemahan di subtes Pengetahuan Kuantitatif pada Tryout ke-2 dan hasilnya mulai terlihat di Tryout ke-3.</p>
+            <div class="card">
+                <h3 style="margin-bottom: 20px;" id="radarTitle">Detail Subtes: Terakhir</h3>
+                <div style="height: 300px; display: flex; justify-content: center;">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <footer>© 2026 Richy Firdaus.</footer>
 
     <script>
-        async function renderChart() {
+        let lineChartInstance = null;
+        let radarChartInstance = null;
+        let allData = []; // Simpan data global
+
+        async function initCharts() {
             try {
+                // Fetch Data
                 const response = await fetch('stats.json');
-                const dataUTBK = await response.json();
+                allData = await response.json();
 
-                const labels = dataUTBK.map(item => item.tryout);
-                const scores = dataUTBK.map(item => item.skor);
+                // Siapkan Data untuk Line Chart
+                const labels = allData.map(d => d.tryout);
+                const scores = allData.map(d => d.skor);
 
-                const ctx = document.getElementById('myChart').getContext('2d');
+                // --- 1. RENDER LINE CHART (Kiri) ---
+                const ctxLine = document.getElementById('lineChart').getContext('2d');
                 
                 // Gradasi Biru
-                let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                let gradient = ctxLine.createLinearGradient(0, 0, 0, 400);
                 gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); 
                 gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');   
 
-                // --- SETTING KECEPATAN ---
-                // Total durasi animasi dari awal sampai akhir (misal 2 detik)
-                const totalDuration = 2000;
-                // Hitung jeda per titik agar pas dengan total durasi
-                const delayBetweenPoints = totalDuration / scores.length;
-                
-                // Trik Animasi:
-                // Kita pakai data "kosong" dulu untuk animasi Y
-                // agar garisnya seolah digambar dari titik sebelumnya
-                const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(scores[0]) : ctx.chart.getDatasetMeta(0).data[ctx.index - 1].getProps(['y'], true).y;
-
-                new Chart(ctx, {
-                    type: 'line', 
+                lineChartInstance = new Chart(ctxLine, {
+                    type: 'line',
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Skor UTBK',
+                            label: 'Total Skor',
                             data: scores,
                             borderColor: '#3b82f6',
                             backgroundColor: gradient,
-                            borderWidth: 4,
-                            pointBackgroundColor: '#1a1a1a', // Warna titik disamakan background biar rapi
+                            borderWidth: 3,
+                            pointBackgroundColor: '#1a1a1a',
                             pointBorderColor: '#3b82f6',
-                            pointBorderWidth: 3,
                             pointRadius: 6,
-                            pointHoverRadius: 10,
-                            fill: true, 
-                            tension: 0.4 // Garis melengkung
+                            pointHoverRadius: 12, // Titik membesar saat dihover
+                            fill: true,
+                            tension: 0.4
                         }]
                     },
                     options: {
                         responsive: true,
-                        interaction: {
-                            intersect: false,
-                            mode: 'index',
+                        maintainAspectRatio: false,
+                        onClick: (e) => {
+                            // FITUR INTERAKTIF: KLIK TITIK
+                            const points = lineChartInstance.getElementsAtEventForMode(e, 'nearest', { intersect: true }, true);
+                            if (points.length) {
+                                const index = points[0].index;
+                                updateRadarChart(index); // Update radar sesuai titik yg diklik
+                            }
                         },
                         scales: {
-                            x: { grid: { display: false }, ticks: { color: '#a0a0a0' } },
-                            y: { grid: { color: '#333' }, ticks: { color: '#a0a0a0' }, beginAtZero: false }
+                            y: { grid: { color: '#333' }, ticks: { color: '#aaa' } },
+                            x: { grid: { display: false }, ticks: { color: '#aaa' } }
                         },
-                        plugins: {
-                            legend: { display: false } // Sembunyikan legenda biar bersih
-                        },
-                        // --- INI RAHASIA ANIMASI HALUSNYA ---
-                        animation: {
-                            x: {
-                                type: 'number',
-                                easing: 'linear', // PENTING: Kecepatan rata (tidak ngerem)
-                                duration: delayBetweenPoints,
-                                from: NaN, // Mulai dari tidak ada
-                                delay(ctx) {
-                                    if (ctx.type !== 'data' || ctx.xStarted) return 0;
-                                    ctx.xStarted = true;
-                                    return ctx.index * delayBetweenPoints;
-                                }
-                            },
-                            y: {
-                                type: 'number',
-                                easing: 'linear', // PENTING: Kecepatan rata
-                                duration: delayBetweenPoints,
-                                from: previousY, // Mulai tepat dari posisi titik sebelumnya
-                                delay(ctx) {
-                                    if (ctx.type !== 'data' || ctx.yStarted) return 0;
-                                    ctx.yStarted = true;
-                                    return ctx.index * delayBetweenPoints;
-                                }
-                            }
-                        }
+                        plugins: { legend: { display: false } }
                     }
                 });
 
+                // --- 2. RENDER RADAR CHART (Kanan) ---
+                // Default: Tampilkan data Tryout TERAKHIR
+                const lastIndex = allData.length - 1;
+                initRadarChart(lastIndex);
+
             } catch (error) {
-                console.error("Gagal memuat grafik:", error);
+                console.error("Gagal load data:", error);
             }
         }
 
-        renderChart();
+        function initRadarChart(index) {
+            const ctxRadar = document.getElementById('radarChart').getContext('2d');
+            const dataItem = allData[index];
+            
+            // Ambil nama subtes (Key) dan nilainya (Value)
+            const subtestLabels = Object.keys(dataItem.detail);
+            const subtestScores = Object.values(dataItem.detail);
+
+            // Update Judul
+            document.getElementById('radarTitle').innerText = "Detail: " + dataItem.tryout;
+
+            radarChartInstance = new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: subtestLabels,
+                    datasets: [{
+                        label: 'Skor Subtes',
+                        data: subtestScores,
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        borderColor: '#3b82f6',
+                        pointBackgroundColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: { // Konfigurasi sumbu jari-jari
+                            angleLines: { color: '#444' }, // Garis jaring
+                            grid: { color: '#333' },
+                            pointLabels: { color: '#fff', font: { size: 12 } }, // Label PU/PPU
+                            ticks: { display: false, backdropColor: 'transparent' }, // Hilangkan angka grid biar bersih
+                            suggestedMin: 0,
+                            suggestedMax: 1000 // Skala UTBK (0-1000)
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Fungsi Update Radar saat Line Chart diklik
+        function updateRadarChart(index) {
+            const dataItem = allData[index];
+            const subtestScores = Object.values(dataItem.detail);
+            
+            // Ganti Data Radar
+            radarChartInstance.data.datasets[0].data = subtestScores;
+            document.getElementById('radarTitle').innerText = "Detail: " + dataItem.tryout;
+            radarChartInstance.update();
+        }
+
+        // Jalankan
+        initCharts();
     </script>
-
-
 
 </body>
 </html>
-

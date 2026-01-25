@@ -1,22 +1,50 @@
 [
   {
     "tryout": "Ruangguru #1",
-    "tanggal": "-2025",
-    "skor": 542
+    "tanggal": "1 Jan 2026",
+    "skor": 542,
+    "detail": {
+      "PU": 520,
+      "PPU": 550,
+      "PBM": 480,
+      "B.Ing": 600,
+      "Kuantitatif": 560
+    }
   },
   {
     "tryout": "Ruangguru #2",
-    "tanggal": "-2025",
-    "skor": 566
+    "tanggal": "15 Jan 2026",
+    "skor": 565,
+    "detail": {
+      "PU": 550,
+      "PPU": 570,
+      "PBM": 510,
+      "B.Ing": 610,
+      "Kuantitatif": 585
+    }
   },
   {
     "tryout": "Ruangguru #3",
-    "tanggal": "-2025",
-    "skor": 678
+    "tanggal": "1 Feb 2026",
+    "skor": 678,
+    "detail": {
+      "PU": 650,
+      "PPU": 680,
+      "PBM": 620,
+      "B.Ing": 700,
+      "Kuantitatif": 740
+    }
   },
   {
     "tryout": "Sainsin #1",
-    "tanggal": "Januari 2026",
-    "skor": 650
+    "tanggal": "15 Feb 2026",
+    "skor": 650,
+    "detail": {
+      "PU": 640,
+      "PPU": 660,
+      "PBM": 630,
+      "B.Ing": 680,
+      "Kuantitatif": 640
+    }
   }
 ]

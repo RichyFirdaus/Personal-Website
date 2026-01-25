@@ -1,58 +1,58 @@
 [
   {
-    "tryout": "Ruangguru #1",
+    "tryout": "Ruangguru Prem #5",
     "tanggal": "1 Jan 2026",
     "skor": 542,
     "detail": {
-      "PU": 520,
-      "PPU": 550,
-      "PBM": 480,
-      "P.Kuantitatif": 560,
-      "L.Indo": 530,
-      "LBI": 510,
-      "PM": 490
+      "PU": 732,
+      "PPU": 458,
+      "PBM": 494,
+      "PK": 587,
+      "LBI": 291,
+      "LBE": 664,
+      "PM": 571
     }
   },
   {
-    "tryout": "Ruangguru #2",
+    "tryout": "Ruangguru Prem #6",
     "tanggal": "15 Jan 2026",
-    "skor": 565,
+    "skor": 566,
     "detail": {
-      "PU": 550,
-      "PPU": 570,
-      "PBM": 510,
-      "P.Kuantitatif": 585,
-      "L.Indo": 560,
-      "LBI": 540,
-      "PM": 520
+      "PU": 603,
+      "PPU": 545,
+      "PBM": 332,
+      "PK": 491,
+      "LBI": 526,
+      "LBE": 686,
+      "PM": 782
     }
   },
   {
-    "tryout": "Ruangguru #3",
+    "tryout": "Ruangguru Prem #8",
     "tanggal": "1 Feb 2026",
     "skor": 678,
     "detail": {
-      "PU": 650,
-      "PPU": 680,
-      "PBM": 620,
-      "P.Kuantitatif": 740,
-      "L.Indo": 690,
-      "LBI": 710,
-      "PM": 680
+      "PU": 696,
+      "PPU": 739,
+      "PBM": 489,
+      "PK": 625,
+      "LBI": 751,
+      "LBE": 590,
+      "PM": 859
     }
   },
   {
-    "tryout": "Sainsin #1",
+    "tryout": "Sainsin #5",
     "tanggal": "15 Feb 2026",
-    "skor": 650,
+    "skor": 635,
     "detail": {
-      "PU": 640,
-      "PPU": 660,
-      "PBM": 630,
-      "P.Kuantitatif": 640,
-      "L.Indo": 670,
-      "LBI": 650,
-      "PM": 610
+      "PU": 764,
+      "PPU": 522,
+      "PBM": 466,
+      "PK": 515,
+      "LBI": 670,
+      "LBE": 605,
+      "PM": 903
     }
   }
 ]

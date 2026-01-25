@@ -1,6 +1,6 @@
 [
   {
-    "tryout": "Ruangguru Prem #5",
+    "tryout": "RuangGuru Prem #5",
     "tanggal": "1 Jan 2026",
     "skor": 542,
     "detail": {
@@ -14,7 +14,7 @@
     }
   },
   {
-    "tryout": "Ruangguru Prem #6",
+    "tryout": "RuangGuru Prem #6",
     "tanggal": "15 Jan 2026",
     "skor": 566,
     "detail": {
@@ -28,7 +28,7 @@
     }
   },
   {
-    "tryout": "Ruangguru Prem #8",
+    "tryout": "RuangGuru Prem #8",
     "tanggal": "1 Feb 2026",
     "skor": 678,
     "detail": {
@@ -54,5 +54,35 @@
       "LBE": 605,
       "PM": 903
     }
-  }
+  },
+  
+  {
+    "tryout": "Mega Tryout RuangGuru #1",
+    "tanggal": "15 Feb 2026",
+    "skor": 626,
+    "detail": {
+      "PU": 834,
+      "PPU": 565,
+      "PBM": 444,
+      "PK": 505,
+      "LBI": 669,
+      "LBE": 551,
+      "PM": 814
+    }
+  },
+  
+  {
+    "tryout": "RuangGuru Prem #9",
+    "tanggal": "15 Feb 2026",
+    "skor": 743,
+    "detail": {
+      "PU": 832,
+      "PPU": 674,
+      "PBM": 674,
+      "PK": 561,
+      "LBI": 867,
+      "LBE": 764,
+      "PM": 826
+    }
+  },
 ]

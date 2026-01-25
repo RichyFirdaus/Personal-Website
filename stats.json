@@ -7,8 +7,10 @@
       "PU": 520,
       "PPU": 550,
       "PBM": 480,
-      "B.Ing": 600,
-      "Kuantitatif": 560
+      "P.Kuantitatif": 560,
+      "L.Indo": 530,
+      "LBI": 510,
+      "PM": 490
     }
   },
   {
@@ -19,8 +21,10 @@
       "PU": 550,
       "PPU": 570,
       "PBM": 510,
-      "B.Ing": 610,
-      "Kuantitatif": 585
+      "P.Kuantitatif": 585,
+      "L.Indo": 560,
+      "LBI": 540,
+      "PM": 520
     }
   },
   {
@@ -31,8 +35,10 @@
       "PU": 650,
       "PPU": 680,
       "PBM": 620,
-      "B.Ing": 700,
-      "Kuantitatif": 740
+      "P.Kuantitatif": 740,
+      "L.Indo": 690,
+      "LBI": 710,
+      "PM": 680
     }
   },
   {
@@ -43,8 +49,10 @@
       "PU": 640,
       "PPU": 660,
       "PBM": 630,
-      "B.Ing": 680,
-      "Kuantitatif": 640
+      "P.Kuantitatif": 640,
+      "L.Indo": 670,
+      "LBI": 650,
+      "PM": 610
     }
   }
 ]

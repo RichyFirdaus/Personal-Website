@@ -155,6 +155,29 @@ body { animation: fadeIn 0.5s ease; }
     .page-header img {
         width: 120px; /* Sedikit lebih kecil */
         height: 120px;
+
+    /* --- TAMBAHAN UNTUK HALAMAN STATS --- */
+
+/* Grid Layout 2 Kolom */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* Kiri lebih lebar dari Kanan */
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+/* Responsif untuk HP (Balik jadi 1 kolom) */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr; /* Tumpuk ke bawah */
+    }
+    
+    /* Radar chart butuh tinggi spesifik di HP biar gak gepeng */
+    #radarChart {
+        max-height: 300px; 
     }
 }
+    }
+}
+
 

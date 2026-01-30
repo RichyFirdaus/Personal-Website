@@ -98,5 +98,19 @@
       "LBE": 703,
       "PM": 853
     }
-  }
+  },
+    {
+    "tryout": "RuangGuru Prem #11",
+    "tanggal": "15 Feb 2026",
+    "skor": 694,
+    "detail": {
+      "PU": 799,
+      "PPU": 774,
+      "PBM": 627,
+      "PK": 516,
+      "LBI": 735,
+      "LBE": 744,
+      "PM": 664
+    }
+   }
 ]

@@ -169,5 +169,18 @@
       "PM": 1000
     }
    }
-
+{
+    "tryout": "Ruangguru Prem #14",
+    "tanggal": "15 Feb 2026",
+    "skor": 716,
+    "detail": {
+      "PU": 754,
+      "PPU": 542,
+      "PBM": 720,
+      "PK": 455,
+      "LBI": 870,
+      "LBE": 785,
+      "PM": 890
+    }
+   }
 ]

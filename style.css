@@ -1,14 +1,14 @@
 /* --- 1. VARIABEL WARNA (DEFAULT DARK MODE) --- */
 :root {
-    --bg-body: #0a0a0a;       /* Hitam sangat gelap */
-    --bg-card: #161616;       /* Abu-abu gelap untuk kartu */
+    --bg-body: #0a0a0a;
+    --bg-card: #161616;
     --bg-nav: rgba(10, 10, 10, 0.8);
     
     --text-main: #ffffff;
-    --text-muted: #a0a0a0;    /* Abu-abu terang untuk teks sekunder */
+    --text-muted: #a0a0a0;
     
-    --accent: #3b82f6;        /* Biru Neon Modern */
-    --border: #333333;        /* Garis pinggir halus */
+    --accent: #3b82f6;
+    --border: #333333;
 }
 
 /* --- 2. RESET & GLOBAL --- */
@@ -19,13 +19,25 @@ body {
     background-color: var(--bg-body);
     color: var(--text-main);
     line-height: 1.6;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
 }
 
 a { text-decoration: none; color: inherit; transition: 0.2s; }
 ul { list-style: none; }
-.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
 
-/* --- 3. NAVBAR (Simpel & Rapi) --- */
+/* Lebar container ditingkatkan agar grafik full layar lebih lega */
+.container { 
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+/* --- 3. NAVBAR --- */
 nav {
     padding: 20px 0;
     position: sticky;
@@ -47,9 +59,9 @@ nav {
 
 .menu { display: flex; gap: 30px; }
 .menu a { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; }
-.menu a:hover, .menu a.active { color: white; } /* Highlight menu aktif */
+.menu a:hover, .menu a.active { color: white; }
 
-/* --- 4. LAYOUT HALAMAN (Hero & Content) --- */
+/* --- 4. LAYOUT HALAMAN --- */
 .page-header {
     padding: 80px 0 40px 0;
     text-align: center;
@@ -63,126 +75,44 @@ nav {
     color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto;
 }
 
-/* --- 5. GRID SYSTEM (Untuk Projects & Diary) --- */
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 25px;
-    padding-bottom: 80px;
+/* --- 5. STATS GRID (FULL LAYOUT) --- */
+/* Bagian ini yang diubah agar grafik menumpuk atas-bawah */
+.stats-grid {
+    display: flex;
+    flex-direction: column; /* Memaksa elemen ke bawah */
+    gap: 30px;             /* Jarak antar grafik */
+    margin-bottom: 50px;
+    width: 100%;
 }
 
-/* Desain Kartu (Card) yang Lebih Modern */
 .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 25px;
     transition: transform 0.2s, border-color 0.2s;
+    width: 100%;           /* Memastikan kartu selebar container */
 }
 
 .card:hover {
-    transform: translateY(-5px);
     border-color: var(--accent);
 }
 
-.card h3 { font-size: 1.2rem; margin-bottom: 10px; }
-.card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
-.card-link { 
-    color: var(--accent); font-weight: 600; font-size: 0.9rem; 
-    display: inline-block; 
-}
-
-/* --- 6. COMPONENTS LAIN --- */
-.btn-primary {
-    display: inline-block;
-    background: white; color: black;
-    padding: 12px 30px; border-radius: 50px;
-    font-weight: 600; margin-top: 20px;
-}
-.btn-primary:hover { background: #e0e0e0; }
-
-footer {
-    text-align: center; padding: 40px; border-top: 1px solid var(--border);
-    color: var(--text-muted); font-size: 0.9rem; margin-top: auto;
-}
-
-/* Animasi Fade In Sederhana saat pindah halaman */
-body { animation: fadeIn 0.5s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* --- CSS KHUSUS TAMPILAN HP (RESPONSIVE) --- */
+/* --- 6. RESPONSIVE (HP) --- */
 @media (max-width: 768px) {
-
-    /* 1. Perbaiki Jarak Halaman */
-    .container {
-        max-width: 900px; margin: 0 auto; padding: 0 20px; 
-               
-               }
-
-    /* 2. Ubah Menu Navigasi Jadi Atas-Bawah */
+    .container { padding: 0 15px; }
+    
     .nav-wrapper {
-        flex-direction: column; /* Menu turun ke bawah logo */
+        flex-direction: column;
         gap: 15px;
     }
 
-    .menu {
-        gap: 20px; /* Jarak antar menu diperlebar biar gampang dipencet jempol */
-        font-size: 0.9rem;
-    }
-
-    /* 3. Kecilkan Judul Besar (H1) */
-    .page-header {
-        padding-top: 40px; /* Kurangi jarak kosong di atas */
-    }
-
-    .page-header h1 {
-        font-size: 1.8rem; /* Ukuran font dikecilkan */
-    }
-
-    /* 4. Atur Grid Kartu (Projects/Diary) */
-    .grid-container {
-        /* Paksa kartu jadi 1 kolom memanjang ke bawah */
-        grid-template-columns: 1fr; 
-        gap: 20px;
-    }
-
-    /* 5. Perbaiki Tampilan Kartu */
-    .card {
-        padding: 20px; /* Kurangi padding dalam kartu */
-    }
-
-    /* 6. Foto Profil di Home */
-    .page-header img {
-        width: 120px; /* Sedikit lebih kecil */
-        height: 120px;
-
-    /* --- TAMBAHAN UNTUK HALAMAN STATS --- */
-
-/* Grid Layout 2 Kolom */
-/* --- PERBAIKAN GRID STATS --- */
-.stats-grid {
-    display: grid;
-    /* Gunakan perbandingan 1:1 atau 1.2:1 agar lebih seimbang di layar sedang */
-    grid-template-columns: 1fr; 
-    gap: 20px;
-    align-items: start;
-    margin-bottom: 50px;
+    .page-header h1 { font-size: 1.8rem; }
+    
+    .card { padding: 15px; }
 }
 
-/* Ubah Media Query agar hanya aktif di HP yang benar-benar kecil */
-@media (max-width: 1000px) { /* Sebelumnya mungkin 768px atau 1200px */
-    .stats-grid {
-        /* Tetap samping-sampingan sampai lebar 1000px */
-        grid-template-columns: 1fr 1fr; 
-    }
+footer {
+    text-align: center; padding: 40px; border-top: 1px solid var(--border);
+    color: var(--text-muted); font-size: 0.9rem; margin-top: 50px;
 }
-
-@media (max-width: 768px) {
-    .stats-grid {
-        /* Baru berubah jadi atas-bawah di layar HP (768px ke bawah) */
-        grid-template-columns: 1fr; 
-    }
-}
-
-
-

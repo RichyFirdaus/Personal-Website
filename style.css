@@ -77,42 +77,45 @@ nav {
 
 /* --- 5. STATS GRID (FULL LAYOUT) --- */
 /* Bagian ini yang diubah agar grafik menumpuk atas-bawah */
+/* --- PERBAIKAN TOTAL STATS (PASTI FULL LAYAR) --- */
+
+/* 1. Pastikan container utama cukup lebar */
+.container { 
+    max-width: 1200px !important; /* Diperlebar agar grafik lebih jelas */
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+/* 2. Paksa grid menjadi satu kolom (Atas-Bawah) */
 .stats-grid {
-    display: flex;
-    flex-direction: column; /* Memaksa elemen ke bawah */
-    gap: 30px;             /* Jarak antar grafik */
-    margin-bottom: 50px;
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important; /* Ini kunci utamanya */
+    gap: 30px !important;
+    width: 100% !important;
 }
 
+/* 3. Paksa kartu grafik memenuhi lebar container */
 .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 25px;
-    transition: transform 0.2s, border-color 0.2s;
-    width: 100%;           /* Memastikan kartu selebar container */
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box;
 }
 
-.card:hover {
-    border-color: var(--accent);
+/* 4. Pastikan Canvas Grafik (Chart.js) mengikuti lebar kartu */
+canvas {
+    width: 100% !important;
+    height: auto !important;
 }
 
-/* --- 6. RESPONSIVE (HP) --- */
-@media (max-width: 768px) {
-    .container { padding: 0 15px; }
-    
-    .nav-wrapper {
-        flex-direction: column;
-        gap: 15px;
+/* 5. Hapus semua aturan Media Query lama yang mungkin mengganggu */
+@media (max-width: 1000px) {
+    .stats-grid {
+        grid-template-columns: 1fr !important;
     }
-
-    .page-header h1 { font-size: 1.8rem; }
-    
-    .card { padding: 15px; }
 }
 
 footer {
     text-align: center; padding: 40px; border-top: 1px solid var(--border);
     color: var(--text-muted); font-size: 0.9rem; margin-top: 50px;
 }
+

@@ -142,7 +142,7 @@
     }
   },
   {
-    "tryout": "Ruangguru Prem #12",
+    "tryout": "RuangGuru Prem #12",
     "tanggal": "15 Feb 2026",
     "skor": 739,
     "detail": {
@@ -156,7 +156,7 @@
     }
    },
   {
-    "tryout": "Ruangguru Prem #13",
+    "tryout": "RuangGuru Prem #13",
     "tanggal": "15 Feb 2026",
     "skor": 759,
     "detail": {
@@ -170,7 +170,7 @@
     }
    },
 {
-    "tryout": "Ruangguru Prem #14",
+    "tryout": "RuangGuru Prem #14",
     "tanggal": "15 Feb 2026",
     "skor": 716,
     "detail": {
@@ -195,6 +195,20 @@
       "LBI": 744,
       "LBE": 588,
       "PM": 858
+    }
+   },
+  {
+    "tryout": "RuangGuru Prem #15",
+    "tanggal": "15 Feb 2026",
+    "skor": 809,
+    "detail": {
+      "PU": 600,
+      "PPU": 696,
+      "PBM": 861,
+      "PK": 600,
+      "LBI": 803,
+      "LBE": 904,
+      "PM": 922
     }
    }
 ]

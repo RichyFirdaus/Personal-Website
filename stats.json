@@ -339,6 +339,20 @@
     }
      },
      {
+    "tryout": "SainsIn #11",
+    "tanggal": "15 Feb 2026",
+    "skor": 741,
+    "detail": {
+      "PU": 796,
+      "PPU": 614,
+      "PBM": 711,
+      "PK": 657,
+      "LBI": 709,
+      "LBE": 799,
+      "PM": 900
+    }
+     },
+     {
     "tryout": "Pahamify #16",
     "tanggal": "15 Feb 2026",
     "skor": 748,

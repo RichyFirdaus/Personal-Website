@@ -353,7 +353,7 @@
     }
      },
      {
-    "tryout": "Pahamify #16",
+    "tryout": "RuangGuru Prem #17",
     "tanggal": "15 Feb 2026",
     "skor": 782,
     "detail": {
@@ -364,6 +364,20 @@
       "LBI": 746,
       "LBE": 1000,
       "PM": 965
+    }
+     },
+     {
+    "tryout": "SainsIn #12",
+    "tanggal": "15 Feb 2026",
+    "skor": 752,
+    "detail": {
+      "PU": 833,
+      "PPU": 662,
+      "PBM": 614,
+      "PK": 838,
+      "LBI": 640,
+      "LBE": 792,
+      "PM": 882
     }
      }
   

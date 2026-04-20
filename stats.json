@@ -435,6 +435,48 @@
       "LBE": 945,
       "PM": 849
     }
+     },
+     {
+    "tryout": "SainsIn #13",
+    "tanggal": "15 Feb 2026",
+    "skor": 760,
+    "detail": {
+      "PU": 698,
+      "PPU": 705,
+      "PBM": 796,
+      "PK": 864,
+      "LBI": 641,
+      "LBE": 834,
+      "PM": 782
+    }
+     },
+     {
+    "tryout": "Pahamify #5",
+    "tanggal": "15 Feb 2026",
+    "skor": 796,
+    "detail": {
+      "PU": 976,
+      "PPU": 609,
+      "PBM": 601,
+      "PK": 836,
+      "LBI": 704,
+      "LBE": 910,
+      "PM": 933
+    }
+     },
+     {
+    "tryout": "Pahamify #19",
+    "tanggal": "15 Feb 2026",
+    "skor": 794,
+    "detail": {
+      "PU": 856,
+      "PPU": 652,
+      "PBM": 554,
+      "PK": 954,
+      "LBI": 699,
+      "LBE": 931,
+      "PM": 915
+    }
      }
   
 ]
